@@ -27,6 +27,14 @@ defmodule Uptom.Router do
     post "/register", RegistrationController, :create
     get "/passwords/new", PasswordController, :new
     post "/passwords", PasswordController, :reset
+
+    # Registered User Zone
+    scope "/" do
+      pipe_through :authenticate
+
+      resources "/sites", SiteController
+    end
+
   end
 
   # Other scopes may use custom stacks.

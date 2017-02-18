@@ -6,6 +6,7 @@ defmodule Uptom.User do
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
+    has_many :sites, Uptom.Site
 
     timestamps()
   end

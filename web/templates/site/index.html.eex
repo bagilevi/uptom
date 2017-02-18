@@ -1,0 +1,28 @@
+<h2>Sites</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>URL</th>
+      <th>Frequency (seconds)</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for site <- @sites do %>
+    <tr>
+      <td><%= site.url %></td>
+      <td><%= site.frequency %></td>
+
+      <td class="text-right">
+        <!-- <%= link "Show", to: site_path(@conn, :show, site), class: "btn btn-default btn-xs" %> -->
+        <%= link "Edit", to: site_path(@conn, :edit, site), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: site_path(@conn, :delete, site), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "Add new site", to: site_path(@conn, :new), class: "btn btn-primary" %>

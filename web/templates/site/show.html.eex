@@ -1,0 +1,18 @@
+<h2>Show site</h2>
+
+<ul>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @site.url %>
+  </li>
+
+  <li>
+    <strong>Frequency:</strong>
+    <%= @site.frequency %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: site_path(@conn, :edit, @site) %>
+<%= link "Back", to: site_path(@conn, :index) %>
