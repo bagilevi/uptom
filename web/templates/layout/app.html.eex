@@ -7,27 +7,41 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Uptom!</title>
+    <title>Uptom</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><span class="logo">Uptom</span></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
             <%= if @current_user do %>
-              <li><%= @current_user.email %></li>
               <li><%= link "Log out", to: session_path(@conn, :delete) %></li>
             <% else %>
               <li><%= link "Login", to: session_path(@conn, :new) %></li>
               <li><%= link "Register", to: registration_path(@conn, :new) %></li>
             <% end %>
           </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
+          <%= if @current_user do %>
+            <p class="navbar-text navbar-right"><%= @current_user.email %></p>
+          <% end %>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
+    <div class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
@@ -36,6 +50,9 @@
       </main>
 
     </div> <!-- /container -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
