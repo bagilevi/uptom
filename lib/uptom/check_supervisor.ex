@@ -26,6 +26,11 @@ defmodule Uptom.CheckSupervisor do
     end
   end
 
+  def remove_site(site_id) do
+    Supervisor.terminate_child(__MODULE__, site_id)
+    Supervisor.delete_child(__MODULE__, site_id)
+  end
+
   def add_all_sites() do
     Uptom.CheckSupervisor.Queries.all_sites
     |> Enum.each(fn {id, url, frequency} -> add_or_update_site(id, url, frequency) end)

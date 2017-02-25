@@ -5,6 +5,7 @@ defmodule Uptom.Site do
     field :url, :string
     field :frequency, :integer
     belongs_to :user, Uptom.User
+    has_many :site_pings, Uptom.SitePing, on_delete: :delete_all
 
     timestamps()
   end

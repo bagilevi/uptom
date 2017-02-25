@@ -23,7 +23,9 @@ defmodule Uptom.SiteController do
       |> Site.changeset(site_params)
 
     case Repo.insert(changeset) do
-      {:ok, _site} ->
+      {:ok, site} ->
+        update_site_in_monitoring(site)
+
         conn
         |> put_flash(:info, "Site created successfully.")
         |> redirect(to: site_path(conn, :index))
@@ -49,6 +51,8 @@ defmodule Uptom.SiteController do
 
     case Repo.update(changeset) do
       {:ok, site} ->
+        update_site_in_monitoring(site)
+
         conn
         |> put_flash(:info, "Site updated successfully.")
         |> redirect(to: site_path(conn, :index))
@@ -64,6 +68,8 @@ defmodule Uptom.SiteController do
     # it to always work (and if it does not, it will raise).
     Repo.delete!(site)
 
+    remove_site_from_monitoring(site)
+
     conn
     |> put_flash(:info, "Site deleted successfully.")
     |> redirect(to: site_path(conn, :index))
@@ -72,5 +78,13 @@ defmodule Uptom.SiteController do
   def action(conn, _) do
     apply(__MODULE__, action_name(conn),
       [conn, conn.params, conn.assigns.current_user])
+  end
+
+  defp update_site_in_monitoring(site) do
+    Uptom.CheckSupervisor.add_or_update_site(site.id, site.url, site.frequency)
+  end
+
+  defp remove_site_from_monitoring(site) do
+    Uptom.CheckSupervisor.remove_site(site.id)
   end
 end
