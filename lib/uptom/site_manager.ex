@@ -1,6 +1,6 @@
 defmodule Uptom.SiteManager do
   @moduledoc """
-    Long-running process that schedules checks.
+    Long-running process that schedules checks for a single site.
   """
 
   use GenServer
@@ -11,6 +11,10 @@ defmodule Uptom.SiteManager do
       {site_id, url, frequency},
       name: {:global, {:site_manager, site_id}}
     )
+  end
+
+  def update_site(pid, site_id, url, frequency) do
+    GenServer.cast(pid, {:update_site, site_id, url, frequency})
   end
 
   def init({site_id, url, frequency}) do
@@ -38,6 +42,14 @@ defmodule Uptom.SiteManager do
         update_result({:error, [message: "internal: checker failed"]})
     end
     {:noreply, state}
+  end
+
+  def handle_cast({:update_site, new_site_id, new_url, new_frequency}, {site_id, url, frequency}) do
+    if ^new_site_id = site_id do
+      {:noreply, {site_id, new_url, new_frequency}}
+    else
+      {:noreply, {site_id, url, frequency}}
+    end
   end
 
   defp schedule_work(frequency) do
