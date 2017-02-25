@@ -45,9 +45,10 @@ defmodule Uptom.SiteManager do
   end
 
   def handle_cast({:update_site, new_site_id, new_url, new_frequency}, {site_id, url, frequency}) do
-    if ^new_site_id = site_id do
+    if new_site_id == site_id do
       {:noreply, {site_id, new_url, new_frequency}}
     else
+      IO.puts "site_id doesn't match: #{new_site_id} #{site_id}"
       {:noreply, {site_id, url, frequency}}
     end
   end
