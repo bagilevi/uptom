@@ -3,6 +3,7 @@
 To start your Phoenix app:
 
   * Install dependencies with `mix deps.get`
+  * Copy `config/dev.secret.example.exs` to `config/dev.secret.exs` and edit it
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
   * Install Node.js dependencies with `npm install`
   * Start Phoenix endpoint with `mix phoenix.server`
