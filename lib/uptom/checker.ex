@@ -10,7 +10,7 @@ defmodule Uptom.Checker do
 
     params = %{ site_id:     site_id,
                 started_at:  started_at,
-                success:     outcome == :ok,
+                success:     outcome == :up,
                 status_code: details[:status_code],
                 message:     details[:message] }
 
