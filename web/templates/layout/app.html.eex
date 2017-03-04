@@ -28,7 +28,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <%= if @current_user do %>
-              <li><%= link "Log out", to: session_path(@conn, :delete) %></li>
+              <li><%= link "Log out", to: session_path(@conn, :delete), method: :delete %></li>
             <% else %>
               <li><%= link "Login", to: session_path(@conn, :new) %></li>
               <li><%= link "Register", to: registration_path(@conn, :new) %></li>

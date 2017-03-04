@@ -19,7 +19,7 @@ defmodule Uptom.Mixfile do
   def application do
     [mod: {Uptom, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :httpotion, :bamboo]]
+                    :phoenix_ecto, :postgrex, :httpotion, :bamboo, :coherence, :swoosh]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,11 +39,10 @@ defmodule Uptom.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:passport, git: "https://github.com/opendrops/passport.git"},
       {:httpotion, "~> 3.0.2"},
       {:bamboo, "~> 0.8.0"},
-      {:bamboo_smtp, "~> 1.3.0"}
-
+      {:bamboo_smtp, "~> 1.3.0"},
+      {:coherence, "~> 0.3"}
     ]
   end
 

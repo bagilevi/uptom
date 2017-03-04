@@ -1,11 +1,12 @@
 defmodule Uptom.User do
   use Uptom.Web, :model
-  alias Passport.Password
+  use Coherence.Schema
 
   schema "users" do
+    field :name, :string
     field :email, :string
-    field :password, :string, virtual: true
-    field :password_hash, :string
+    coherence_schema
+
     has_many :sites, Uptom.Site
 
     timestamps()
@@ -13,10 +14,11 @@ defmodule Uptom.User do
 
   def changeset(model, params \\ %{}) do
     model
-    |> cast(params, [:email])
-    |> validate_required([:email])
+    |> cast(params, [:name, :email] ++ coherence_fields)
+    |> validate_required([:name, :email])
     |> validate_length(:email, min: 1, max: 150)
     |> unique_constraint(:email)
+    |> validate_coherence(params)
   end
 
   def registration_changeset(model, params) do

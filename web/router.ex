@@ -1,6 +1,6 @@
 defmodule Uptom.Router do
   use Uptom.Web, :router
-  use Passport
+  use Coherence.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -8,11 +8,31 @@ defmodule Uptom.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :current_user
+    plug Coherence.Authentication.Session
+    # plug :current_user
+  end
+
+  pipeline :protected do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug Coherence.Authentication.Session, protected: true
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/" do
+    pipe_through :browser
+    coherence_routes()
+  end
+
+  scope "/" do
+    pipe_through :protected
+    coherence_routes :protected
   end
 
   scope "/", Uptom do
@@ -27,15 +47,15 @@ defmodule Uptom.Router do
     post "/register", RegistrationController, :create
     get "/passwords/new", PasswordController, :new
     post "/passwords", PasswordController, :reset
-
-    # Registered User Zone
-    scope "/" do
-      pipe_through :authenticate
-
-      resources "/sites", SiteController
-    end
-
   end
+
+  # Registered User Zone
+  scope "/", Uptom do
+    pipe_through :protected
+
+    resources "/sites", SiteController
+  end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", Uptom do

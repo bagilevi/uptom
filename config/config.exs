@@ -22,10 +22,20 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :passport,
-  resource: Uptom.User,
-  repo: Uptom.Repo
+# %% Coherence Configuration %%   Don't remove this line
+config :coherence,
+  user_schema: Uptom.User,
+  repo: Uptom.Repo,
+  module: Uptom,
+  logged_out_url: "/",
+  email_from_name: "upTom",
+  email_from_email: "uptom@example.com",
+  opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :confirmable, :registerable]
 
+config :coherence, Uptom.Coherence.Mailer,
+  adapter: Swoosh.Adapters.Sendgrid,
+  api_key: "your api key here"
+# %% End Coherence Configuration %%
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
