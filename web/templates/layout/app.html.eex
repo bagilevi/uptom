@@ -8,51 +8,80 @@
     <meta name="author" content="">
 
     <title>Uptom</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <style>
+      html { font-family: PT Sans, sans-serif; }
+      .brand-logo { font-weight: 900; }
+      #welcome-text { font-weight: 700; }
+
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      #main {
+        flex: 1 0 auto;
+      }
+
+    </style>
   </head>
 
   <body>
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/"><span class="logo">Uptom</span></a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <%= if @current_user do %>
-              <li><%= link "Log out", to: session_path(@conn, :delete), method: :delete %></li>
-            <% else %>
-              <li><%= link "Login", to: session_path(@conn, :new) %></li>
-              <li><%= link "Register", to: registration_path(@conn, :new) %></li>
-            <% end %>
-          </ul>
+    <nav class="grey darken-3" role="navigation">
+      <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">upTom<span class="green-text text-accent-4">.</span></a>
+        <ul class="right hide-on-med-and-down">
           <%= if @current_user do %>
-            <p class="navbar-text navbar-right"><%= @current_user.email %></p>
+            <li><%= link "Log out", to: session_path(@conn, :delete), method: :delete %></li>
+          <% else %>
+            <li><%= link "Login", to: session_path(@conn, :new) %></li>
+            <li><%= link "Register", to: registration_path(@conn, :new) %></li>
           <% end %>
-        </div><!--/.nav-collapse -->
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
       </div>
     </nav>
 
-    <div class="container">
+
+
+    <div id="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <main role="main">
         <%= render @view_module, @view_template, assigns %>
-      </main>
 
-    </div> <!-- /container -->
+    </div>
 
+
+
+
+
+    <footer class="page-footer grey darken-3">
+      <div class="footer-copyright">
+        <div class="container">
+        Made by <a class="grey-text text-lighten-3" href="http://levente.bagi.name">Levente Bagi</a>
+        </div>
+      </div>
+    </footer>
+
+
+
+
+    <!--  Scripts-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <script>
+      $(document).ready(function() {
+        $('select').material_select();
+      });
+    </script>
+
   </body>
+
 </html>
