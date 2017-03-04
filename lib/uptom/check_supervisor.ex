@@ -15,13 +15,14 @@ defmodule Uptom.CheckSupervisor do
     supervise([], strategy: :one_for_one)
   end
 
-  def add_or_update_site(site_id, url, frequency) do
-    result = Supervisor.start_child(__MODULE__, worker(Uptom.SiteManager, [site_id, url, frequency], id: site_id))
+  def add_or_update_site(site) do
+    site = Uptom.SiteInfo.from_site_model(site)
+    result = Supervisor.start_child(__MODULE__, worker(Uptom.SiteManager, [site], id: site.id))
     case result do
       {:ok, _} ->
         :ok
       {:error, {:already_started, pid}} ->
-        Uptom.SiteManager.update_site(pid, site_id, url, frequency)
+        Uptom.SiteManager.update_site(pid, site)
         :ok
     end
   end
@@ -33,7 +34,7 @@ defmodule Uptom.CheckSupervisor do
 
   def add_all_sites() do
     Uptom.CheckSupervisor.Queries.all_sites
-    |> Enum.each(fn {id, url, frequency} -> add_or_update_site(id, url, frequency) end)
+    |> Enum.each(fn site -> add_or_update_site(site) end)
   end
 
   defmodule Queries do
@@ -42,8 +43,7 @@ defmodule Uptom.CheckSupervisor do
     alias Uptom.Site
 
     def all_sites do
-      Repo.all from p in Site,
-        select: {p.id, p.url, p.frequency}
+      Repo.all from s in Site, preload: :user
     end
   end
 end

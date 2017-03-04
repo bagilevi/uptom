@@ -5,32 +5,30 @@ defmodule Uptom.SiteManager do
 
   use GenServer
 
-  def start_link(site_id, url, frequency) do
+  def start_link(site) do
     GenServer.start_link(
       __MODULE__,
-      [ site_id: site_id,
-        url: url,
-        frequency: frequency,
+      [ site: site,
         status: nil ],
-      name: {:global, {:site_manager, site_id}}
+      name: {:global, {:site_manager, site.id}}
     )
   end
 
-  def update_site(pid, site_id, url, frequency) do
-    GenServer.cast(pid, {:update_site, site_id, url, frequency})
+  def update_site(pid, site) do
+    GenServer.cast(pid, {:update_site, site})
   end
 
   def init(state) do
-    schedule_work(state[:frequency])
+    schedule_work(state[:site].frequency)
     {:ok, state}
   end
 
   def handle_info(:work, state) do
-    schedule_work(state[:frequency])
+    schedule_work(state[:site].frequency)
     site_manager_pid = self()
 
     pid = spawn(fn ->
-      result = Uptom.Checker.check(state[:site_id], state[:url])
+      result = Uptom.Checker.check(state[:site].id, state[:site].url)
       update_result(result, site_manager_pid)
     end)
     Process.monitor(pid)
@@ -38,7 +36,7 @@ defmodule Uptom.SiteManager do
     {:noreply, state}
   end
 
-  def handle_info({:DOWN, _, _, _, info} = message, state) do
+  def handle_info({:DOWN, _, _, _, info} = _message, state) do
     case info do
       :normal -> nil
       _ ->
@@ -63,11 +61,11 @@ defmodule Uptom.SiteManager do
     {:noreply, new_state}
   end
 
-  def handle_cast({:update_site, new_site_id, new_url, new_frequency}, state) do
-    if new_site_id == state[:site_id] do
-      {:noreply, Keyword.merge(state, [url: new_url, frequency: new_frequency])}
+  def handle_cast({:update_site, site}, state) do
+    if site.id == state[:site].id do
+      {:noreply, Keyword.merge(state, [site: site])}
     else
-      IO.puts "site_id doesn't match: #{new_site_id} #{state[:site_id]}"
+      IO.puts "site_id doesn't match: #{site.id} #{state[:site].id}"
       {:noreply, state}
     end
   end
@@ -82,7 +80,7 @@ defmodule Uptom.SiteManager do
 
   def send_alert(state, status) do
     Uptom.Alerter.alert(
-      state[:site_id],
+      state[:site],
       status
     )
   end

@@ -14,8 +14,12 @@ defmodule Uptom do
       supervisor(Uptom.Endpoint, []),
       # Start your own worker by calling: Uptom.Worker.start_link(arg1, arg2, arg3)
       # worker(Uptom.Worker, [arg1, arg2, arg3]),
-      supervisor(Uptom.CheckSupervisor, [])
+
+      if System.get_env("SKIP_CHECK_SUPERVISOR") != "1" do
+        supervisor(Uptom.CheckSupervisor, [])
+      end
     ]
+    children = children |> Enum.reject(&(is_nil(&1)))
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options

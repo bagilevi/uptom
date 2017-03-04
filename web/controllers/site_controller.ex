@@ -81,7 +81,7 @@ defmodule Uptom.SiteController do
   end
 
   defp update_site_in_monitoring(site) do
-    Uptom.CheckSupervisor.add_or_update_site(site.id, site.url, site.frequency)
+    Uptom.CheckSupervisor.add_or_update_site(site)
   end
 
   defp remove_site_from_monitoring(site) do
