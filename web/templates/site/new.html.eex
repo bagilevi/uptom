@@ -1,6 +1,17 @@
-<h2>New site</h2>
+<a href="<%= site_path(@conn, :index) %>" class="btn btn-flat">
+  <i class="material-icons left">fast_rewind</i>
+  Back
+</a>
+<div class="row">
+  <div class="centered-form">
+    <div class="card grey lighten-4">
+      <div class="card-content">
+        <span class="card-title">New site</span>
 
-<%= render "form.html", changeset: @changeset,
-                        action: site_path(@conn, :create) %>
+        <%= render "form.html", changeset: @changeset,
+                                action: site_path(@conn, :create) %>
 
-<%= link "Back", to: site_path(@conn, :index) %>
+      </div>
+    </div>
+  </div>
+</div>
