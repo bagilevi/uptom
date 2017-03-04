@@ -1,10 +1,10 @@
 <div class="section no-pad-bot" id="index-banner">
   <h1 id="welcome-text" class="header center grey-text text-darken-3">Free and easy monitoring for your website</h1>
   <div class="row center">
-    <h5 class="header col s12 light">Avoid embarrasment by being the first to know when your website is down! Set it up in 3 minutes.</h5>
+    <h5 class="header col s12 light">Avoid embarrasment by being the first to know when your website is down!</h5>
   </div>
   <div class="row center">
-    <a href="#" id="download-button" class="btn-large waves-effect waves-light green darken-1">Get Started</a>
+    <a href="<%= registration_path(@conn, :new) %>"  class="btn-large waves-effect waves-light green darken-1">Get Started</a>
   </div>
 </div>
 
@@ -17,7 +17,7 @@
         <h2 class="center green-text"><i class="material-icons">flash_on</i></h2>
         <h5 class="center">Quick &amp; Easy Setup</h5>
 
-        <p class="light">If you have access to webmaster@example.com or info@example.com, all you need to do is enter the website address, select which email address to receive the confirmation email and click the link in the email.</p>
+        <p class="light">Fill out a simple sign up form, add your site and prove you own the site by placing a file in the root directory, and you're ready to go!</p>
       </div>
     </div>
 
@@ -46,45 +46,6 @@
 <div class="section">
 
   <div class="row center hide-on-med-and-up">
-    <a href="#" id="download-button" class="btn-large waves-effect waves-light green darken-1">Get Started</a>
+    <a href="<%= registration_path(@conn, :new) %>"  class="btn-large waves-effect waves-light green darken-1">Get Started</a>
   </div>
-</div>
-
-
-<div class="row">
-  <form class="col s6">
-    <div class="row">
-      <div class="input-field col s12">
-        <input placeholder="Website URL" id="url" type="text" class="validate">
-        <label for="url">Website URL</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s12">
-        <select>
-          <option value="1"></option>
-          <option value="1">webmaster@example.com</option>
-          <option value="2">admin@example.com</option>
-          <option value="3">admin@example.com</option>
-          <option value="">Don't send email</option>
-        </select>
-        <label>Where should I send the verification email?</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s12">
-        <input id="email" type="email" class="validate">
-        <label for="email">Email</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s12">
-        This is an inline input field:
-        <div class="input-field inline">
-          <input id="email" type="email" class="validate">
-          <label for="email" data-error="wrong" data-success="right">Email</label>
-        </div>
-      </div>
-    </div>
-  </form>
 </div>

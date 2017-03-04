@@ -29,7 +29,7 @@
   </head>
 
   <body>
-    <nav class="grey darken-3" role="navigation">
+    <nav class="" role="navigation">
       <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">upTom<span class="green-text text-accent-4">.</span></a>
         <ul class="right hide-on-med-and-down">
           <%= if @current_user do %>
