@@ -3,7 +3,6 @@ defmodule Uptom.SiteInfo do
   defstruct [:id, :url, :frequency, :email]
 
   def from_site_model(site_model) do
-    IO.inspect site_model
     site = Uptom.Repo.preload(site_model, :user)
     %Uptom.SiteInfo{
       id:        site.id,

@@ -17,7 +17,7 @@ defmodule Uptom.CheckSupervisor do
 
   def add_or_update_site(site) do
     site = Uptom.SiteInfo.from_site_model(site)
-    result = Supervisor.start_child(__MODULE__, worker(Uptom.SiteManager, [site], id: site.id))
+    result = Supervisor.start_child(__MODULE__, worker(Uptom.SiteManager, [site.id], id: site.id))
     case result do
       {:ok, _} ->
         :ok

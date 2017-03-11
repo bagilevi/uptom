@@ -5,13 +5,16 @@ defmodule Uptom.SiteManager do
 
   use GenServer
 
-  def start_link(site) do
-    GenServer.start_link(
+  def start_link(site_id) do
+    {:ok, pid} = GenServer.start_link(
       __MODULE__,
-      [ site: site,
+      [ site_id: site_id,
+        site: Uptom.SiteQuery.by_id(site_id),
+        timer: nil,
         status: nil ],
-      name: {:global, {:site_manager, site.id}}
+      name: {:global, {:site_manager, site_id}}
     )
+    {:ok, pid}
   end
 
   def update_site(pid, site) do
@@ -19,12 +22,12 @@ defmodule Uptom.SiteManager do
   end
 
   def init(state) do
-    schedule_work(state[:site].frequency)
+    state = schedule_next_run(state)
     {:ok, state}
   end
 
   def handle_info(:work, state) do
-    schedule_work(state[:site].frequency)
+    state = schedule_next_run(state)
     site_manager_pid = self()
 
     pid = spawn(fn ->
@@ -62,16 +65,20 @@ defmodule Uptom.SiteManager do
   end
 
   def handle_cast({:update_site, site}, state) do
-    if site.id == state[:site].id do
-      {:noreply, Keyword.merge(state, [site: site])}
+    if site.id == state[:site_id] do
+      IO.puts "SiteManager[#{state[:site_id]}] updating site:"
+      state = state |> Keyword.put(:site, site) |> schedule_next_run
+      {:noreply, state}
     else
-      IO.puts "site_id doesn't match: #{site.id} #{state[:site].id}"
+      IO.puts "site_id doesn't match: #{site.id} #{state[:site_id]}"
       {:noreply, state}
     end
   end
 
-  defp schedule_work(frequency) do
-    Process.send_after(self(), :work, frequency * 1000)
+  defp schedule_next_run(state) do
+    if state[:timer], do: Process.cancel_timer(state[:timer])
+    timer = Process.send_after(self(), :work, state[:site].frequency * 1000)
+    Keyword.put(state, :timer, timer)
   end
 
   def update_result(result, site_manager_pid) do
