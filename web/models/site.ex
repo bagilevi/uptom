@@ -4,6 +4,8 @@ defmodule Uptom.Site do
   schema "sites" do
     field :url, :string
     field :frequency, :integer
+    field :up, :boolean
+    field :last_checked_at, Ecto.DateTime
     belongs_to :user, Uptom.User
     has_many :site_pings, Uptom.SitePing, on_delete: :delete_all
 
@@ -17,5 +19,8 @@ defmodule Uptom.Site do
     struct
     |> cast(params, [:url, :frequency])
     |> validate_required([:url, :frequency])
+  end
+
+  def status_update_changeset(struct, params) do
   end
 end

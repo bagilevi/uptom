@@ -4,7 +4,7 @@ defmodule Uptom.SiteController do
   alias Uptom.Site
 
   def index(conn, _params, user) do
-    sites = Repo.all(assoc(user, :sites))
+    sites = Repo.all(from s in assoc(user, :sites), order_by: s.inserted_at)
     render(conn, "index.html", sites: sites)
   end
 

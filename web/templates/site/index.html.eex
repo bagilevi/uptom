@@ -1,7 +1,7 @@
 <div class="sites-container">
   <%= for site <- @sites do %>
     <div class="site-container">
-      <div class="card green darken-3 grow clickable" data-href="<%= site_path(@conn, :show, site) %>">
+      <div class="card <%= site_color(site) %> grow clickable" data-href="<%= site_path(@conn, :show, site) %>">
         <div class="card-content white-text">
           <span class="card-title"><%= site.url %></span>
           <p>Checked every <%= site.frequency %> seconds.</p>
