@@ -21,27 +21,9 @@ defmodule Uptom.User do
     |> validate_coherence(params)
   end
 
-  def registration_changeset(model, params) do
-    model
-    |> changeset(params)
-    |> cast(params, [:password])
-    |> validate_required([:password])
-    |> validate_length(:password, min: 6, max: 100)
-    |> put_hashed_password()
-  end
-
-  defp put_hashed_password(changeset) do
-    case changeset do
-      %Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
-        put_change(changeset, :password_hash, Password.hash(pass))
-        _ ->
-          changeset
-    end
-  end
-
   defimpl Coherence.DbStore, for: Uptom.User do
     alias Uptom.{Session, Repo}
-    
+
     def get_user_data(_, creds, _id_key) do
       case Repo.one from s in Session, where: s.creds == ^creds, preload: :user do
         %{user: user} -> user

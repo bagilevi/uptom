@@ -20,7 +20,4 @@ defmodule Uptom.Site do
     |> cast(params, [:url, :frequency])
     |> validate_required([:url, :frequency])
   end
-
-  def status_update_changeset(struct, params) do
-  end
 end

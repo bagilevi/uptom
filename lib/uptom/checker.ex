@@ -8,7 +8,7 @@ defmodule Uptom.Checker do
   def check(site_id, url) do
     started_at = :calendar.universal_time()
 
-    {outcome, details} = result = Uptom.Pinger.ping(url)
+    result = Uptom.Pinger.ping(url)
 
     push_update_to_clients(site_id, started_at, result)
     insert_ping(site_id, started_at, result)
@@ -35,7 +35,7 @@ defmodule Uptom.Checker do
                                       last_checked_at: started_at ])
   end
 
-  defp push_update_to_clients(site_id, started_at, {outcome, details}) do
+  defp push_update_to_clients(site_id, _started_at, {outcome, _details}) do
     Uptom.Endpoint.broadcast!("site:#{site_id}", "ping_result", %{outcome: outcome})
   end
 end
