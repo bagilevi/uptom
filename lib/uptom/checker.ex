@@ -10,6 +10,7 @@ defmodule Uptom.Checker do
 
     {outcome, details} = result = Uptom.Pinger.ping(url)
 
+    push_update_to_clients(site_id, started_at, result)
     insert_ping(site_id, started_at, result)
     update_site_status(site_id, started_at, result)
 
@@ -32,5 +33,9 @@ defmodule Uptom.Checker do
     from(s in Uptom.Site, where: s.id == ^site_id)
       |> Uptom.Repo.update_all(set: [ up: up,
                                       last_checked_at: started_at ])
+  end
+
+  defp push_update_to_clients(site_id, started_at, {outcome, details}) do
+    Uptom.Endpoint.broadcast!("site:#{site_id}", "ping_result", %{outcome: outcome})
   end
 end

@@ -2,7 +2,7 @@ defmodule Uptom.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", Uptom.RoomChannel
+  channel "site:*", Uptom.SiteChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

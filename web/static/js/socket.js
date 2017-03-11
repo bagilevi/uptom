@@ -53,10 +53,31 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 socket.connect()
 
-// Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
-channel.join()
-  .receive("ok", resp => { console.log("Joined successfully", resp) })
-  .receive("error", resp => { console.log("Unable to join", resp) })
+
+$(function() {
+  $('.site-entity').each(function(index){
+    const siteId = $(this).data('site-id');
+    const $siteEl = $(".site-entity-" + siteId);
+
+    console.log("Subscribing to site:", siteId);
+
+    let channel = socket.channel("site:" + siteId, {})
+
+    channel.on("ping_result", payload => {
+      console.log("Received ping_result for site ", siteId, ': ', payload);
+      if (payload.outcome == 'up') {
+        $siteEl.removeClass('red');
+        $siteEl.addClass('green');
+      } else {
+        $siteEl.removeClass('green');
+        $siteEl.addClass('red');
+      }
+    })
+
+    channel.join()
+      .receive("ok", resp => { console.log("Joined successfully", resp) })
+      .receive("error", resp => { console.log("Unable to join", resp) })
+  });
+});
 
 export default socket
