@@ -32,7 +32,7 @@
     <nav class="" role="navigation">
       <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">upTom<span class="green-text text-accent-4">.</span></a>
         <ul class="right hide-on-med-and-down">
-          <%= if @current_user do %>
+          <%= if Coherence.logged_in?(@conn) do %>
             <li><%= link "Log out", to: session_path(@conn, :delete), method: :delete %></li>
           <% else %>
             <li><%= link "Login", to: session_path(@conn, :new) %></li>
