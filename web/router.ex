@@ -8,7 +8,7 @@ defmodule Uptom.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Coherence.Authentication.Session
+    plug Coherence.Authentication.Session, db_model: Uptom.User
     # plug :current_user
   end
 
@@ -18,7 +18,7 @@ defmodule Uptom.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Coherence.Authentication.Session, protected: true
+    plug Coherence.Authentication.Session, db_model: Uptom.User, protected: true
   end
 
   pipeline :api do

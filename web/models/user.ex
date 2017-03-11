@@ -39,4 +39,31 @@ defmodule Uptom.User do
     end
   end
 
+  defimpl Coherence.DbStore, for: Uptom.User do
+    alias Uptom.{Session, Repo}
+    
+    def get_user_data(_, creds, _id_key) do
+      case Repo.one from s in Session, where: s.creds == ^creds, preload: :user do
+        %{user: user} -> user
+        _ -> nil
+      end
+    end
+
+    def put_credentials(user, creds , _) do
+      case Repo.one from s in Session, where: s.creds == ^creds do
+        nil -> %Session{creds: creds}
+        session -> session
+      end
+      |> Session.changeset(%{user_id: user.id})
+      |> Repo.insert_or_update
+    end
+
+    def delete_credentials(_, creds) do
+      case Repo.one from s in Session, where: s.creds == ^creds do
+        nil -> nil
+        session ->
+          Repo.delete session
+      end
+    end
+  end
 end
