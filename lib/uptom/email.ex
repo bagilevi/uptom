@@ -1,10 +1,10 @@
 defmodule Uptom.Email do
-  use Bamboo.Phoenix, view: Uptom.EmailView
+  import Swoosh.Email
 
   def alert(email_address, url, status) do
     status_text = if status == :up, do: "UP", else: "DOWN"
 
-    new_email
+    new
     |> to(email_address)
     |> from("me@example.com")
     |> subject("#{status_text}")

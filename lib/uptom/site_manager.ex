@@ -9,7 +9,7 @@ defmodule Uptom.SiteManager do
     {:ok, pid} = GenServer.start_link(
       __MODULE__,
       [ site_id: site_id,
-        site: Uptom.SiteQuery.by_id(site_id),
+        site: Uptom.SiteInfo.get(site_id),
         timer: nil,
         status: nil ],
       name: {:global, {:site_manager, site_id}}

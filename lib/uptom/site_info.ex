@@ -11,4 +11,8 @@ defmodule Uptom.SiteInfo do
       email:     site.user.email
     }
   end
+
+  def get(site_id) do
+    from_site_model Uptom.SiteQuery.by_id(site_id)
+  end
 end
