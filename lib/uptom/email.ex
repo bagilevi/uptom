@@ -6,7 +6,7 @@ defmodule Uptom.Email do
 
     new
     |> to(email_address)
-    |> from("me@example.com")
+    |> from(Application.get_env(:uptom, :email))
     |> subject("#{status_text}")
     |> text_body("#{url} is #{status_text}!")
   end
