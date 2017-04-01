@@ -14,6 +14,7 @@ defmodule Uptom.Coherence.Web do
       import Uptom.Gettext
       import Uptom.Coherence.ViewHelpers
 
+      import Uptom.CommonHelpers
     end
   end
 

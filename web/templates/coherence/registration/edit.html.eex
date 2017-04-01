@@ -1,5 +1,5 @@
-<h3>Edit Account</h3>
-
-<%= render "form.html", changeset: @changeset,
-                        label: "Update", required: [],
-                        action: registration_path(@conn, :update) %>
+<%= centered_card "Edit Account" do %>
+  <%= render "form.html", changeset: @changeset,
+                          label: "Update", required: [],
+                          action: registration_path(@conn, :update) %>
+<% end %>

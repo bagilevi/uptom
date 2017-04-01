@@ -52,6 +52,8 @@ defmodule Uptom.Web do
       import Uptom.Router.Helpers
       import Uptom.ErrorHelpers
       import Uptom.Gettext
+
+      import Uptom.CommonHelpers
     end
   end
 

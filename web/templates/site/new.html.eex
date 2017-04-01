@@ -1,17 +1,6 @@
-<a href="<%= site_path(@conn, :index) %>" class="btn btn-flat">
-  <i class="material-icons left">fast_rewind</i>
-  Back
-</a>
-<div class="row">
-  <div class="centered-form">
-    <div class="card grey lighten-4">
-      <div class="card-content">
-        <span class="card-title">New site</span>
+<%= back_button site_path(@conn, :index) %>
 
-        <%= render "form.html", changeset: @changeset,
-                                action: site_path(@conn, :create) %>
-
-      </div>
-    </div>
-  </div>
-</div>
+<%= centered_card "New site" do %>
+  <%= render "form.html", changeset: @changeset,
+                          action: site_path(@conn, :create) %>
+<% end %>

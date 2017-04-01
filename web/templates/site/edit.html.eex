@@ -1,6 +1,6 @@
-<h2>Edit site</h2>
+<%= back_button site_path(@conn, :index) %>
 
-<%= render "form.html", changeset: @changeset,
-                        action: site_path(@conn, :update, @site) %>
-
-<%= link "Back", to: site_path(@conn, :index) %>
+<%= centered_card "Edit site" do %>
+  <%= render "form.html", changeset: @changeset,
+                          action: site_path(@conn, :update, @site) %>
+<% end %>
