@@ -9,7 +9,7 @@
 
     <li>
       <strong>Frequency:</strong>
-      <%= @site.frequency %> seconds
+      <%= Uptom.Frequency.humanize_every(@site.frequency) %>
     </li>
 
     <li>

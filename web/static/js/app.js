@@ -24,4 +24,10 @@ $(function() {
   $('.clickable').on('click', function(ev){
     window.location.href = $(this).data('href');
   });
+
+  // Remove error from a form field when you start editing
+  $('input.invalid').on('keypress', function(ev){
+    $(this).removeClass('invalid')
+    $(this).parent().find('.field-error').remove();
+  });
 });

@@ -11,7 +11,7 @@ defmodule Uptom.SiteController do
   def new(conn, _params, user) do
     changeset =
       user
-      |> build_assoc(:sites)
+      |> build_assoc(:sites, enabled: true)
       |> Site.changeset()
     render(conn, "new.html", changeset: changeset)
   end

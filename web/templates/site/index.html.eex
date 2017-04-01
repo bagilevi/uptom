@@ -6,7 +6,7 @@
           <span class="card-title"><%= site.name || site.url %></span>
           <p><%= site.url %></p>
           <%= if site.enabled do %>
-            <p>Checked every <%= site.frequency %> seconds.</p>
+            <p>Checked <%= Uptom.Frequency.humanize_every(site.frequency) %>.</p>
           <% else %>
             <p>Disabled</p>
           <% end %>

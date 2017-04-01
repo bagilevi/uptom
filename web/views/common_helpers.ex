@@ -1,5 +1,7 @@
 defmodule Uptom.CommonHelpers do
   use Phoenix.HTML
+  import Uptom.ErrorHelpers
+
 
   def back_button(href, label \\ "Back") do
     content_tag(:a, href: href, class: "btn btn-flat") do
@@ -34,5 +36,17 @@ defmodule Uptom.CommonHelpers do
 
   def div_tag(class, [do: block]) do
     content_tag(:div, block, class: class)
+  end
+
+  def mat_text_input(form, field, label_text, opts \\ []) do
+    div_tag("row") do
+      div_tag("input-field col s12") do
+        html_escape([
+          text_input(form, field, class: "form_control #{if form.errors[field], do: "invalid"}"),
+          label(form, field, label_text, class: "control-label"),
+          error_tag(form, field)
+        ])
+      end
+    end
   end
 end
