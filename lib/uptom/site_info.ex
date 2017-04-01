@@ -1,11 +1,12 @@
 defmodule Uptom.SiteInfo do
-  @enforce_keys [:id, :url, :frequency, :email]
-  defstruct [:id, :url, :frequency, :email]
+  @enforce_keys [:id, :url, :name, :frequency, :email]
+  defstruct [:id, :url, :name, :frequency, :email]
 
   def from_site_model(site_model) do
     site = Uptom.Repo.preload(site_model, :user)
     %Uptom.SiteInfo{
       id:        site.id,
+      name:      site.name,
       url:       site.url,
       frequency: site.frequency,
       email:     site.user.email

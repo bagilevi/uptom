@@ -16,14 +16,18 @@ defmodule Uptom.CheckSupervisor do
   end
 
   def add_or_update_site(site) do
-    site = Uptom.SiteInfo.from_site_model(site)
-    result = Supervisor.start_child(__MODULE__, worker(Uptom.SiteManager, [site.id], id: site.id))
-    case result do
-      {:ok, _} ->
-        :ok
-      {:error, {:already_started, pid}} ->
-        Uptom.SiteManager.update_site(pid, site)
-        :ok
+    if site.enabled do
+      site = Uptom.SiteInfo.from_site_model(site)
+      result = Supervisor.start_child(__MODULE__, worker(Uptom.SiteManager, [site.id], id: site.id))
+      case result do
+        {:ok, _} ->
+          :ok
+        {:error, {:already_started, pid}} ->
+          Uptom.SiteManager.update_site(pid, site)
+          :ok
+      end
+    else
+      remove_site(site.id)
     end
   end
 

@@ -14,6 +14,7 @@ use Mix.Config
 config :uptom, Uptom.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [host: "uptom.jkl.me", port: 80],
+  root_url: "http://uptom.jkl.me/",
   cache_static_manifest: "priv/static/manifest.json",
   server: true,
   version: Mix.Project.config[:version],

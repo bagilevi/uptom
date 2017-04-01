@@ -66,11 +66,19 @@ $(function() {
     channel.on("ping_result", payload => {
       console.log("Received ping_result for site ", siteId, ': ', payload);
       if (payload.outcome == 'up') {
-        $siteEl.removeClass('red');
-        $siteEl.addClass('green');
-      } else {
-        $siteEl.removeClass('green');
-        $siteEl.addClass('red');
+        $siteEl.removeClass('site-nostatus');
+        $siteEl.removeClass('site-down');
+        $siteEl.addClass('site-up');
+      }
+      if (payload.outcome == 'down') {
+        $siteEl.removeClass('site-nostatus');
+        $siteEl.removeClass('site-up');
+        $siteEl.addClass('site-down');
+      }
+      if (payload.outcome == null) {
+        $siteEl.removeClass('site-up');
+        $siteEl.removeClass('site-down');
+        $siteEl.addClass('site-nostatus');
       }
     })
 

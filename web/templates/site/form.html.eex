@@ -6,6 +6,12 @@
   <% end %>
 
   <div class="form-group">
+    <%= label f, :name, "Name", class: "control-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="form-group">
     <%= label f, :url, "URL", class: "control-label" %>
     <%= text_input f, :url, class: "form-control" %>
     <%= error_tag f, :url %>
@@ -17,6 +23,16 @@
     <%= error_tag f, :frequency %>
   </div>
 
+  <div class="form-group">
+    <p>
+      <%= checkbox f, :enabled, class: "filled-in", checked: (if @changeset.data.enabled, do: "checked") %>
+      <label for="site_enabled">Enabled</label>
+    </p>
+    <%= error_tag f, :enabled %>
+  </div>
+
+  <br/>
+  <br/>
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>

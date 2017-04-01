@@ -2,8 +2,10 @@ defmodule Uptom.Site do
   use Uptom.Web, :model
 
   schema "sites" do
+    field :name, :string
     field :url, :string
     field :frequency, :integer
+    field :enabled, :boolean
     field :up, :boolean
     field :last_checked_at, Ecto.DateTime
     belongs_to :user, Uptom.User
@@ -17,7 +19,17 @@ defmodule Uptom.Site do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:url, :frequency])
-    |> validate_required([:url, :frequency])
+    |> cast(params, [:name, :url, :frequency, :enabled])
+    |> validate_required([:name, :url, :frequency])
+    |> clear_status_if_disabled
+  end
+
+
+  defp clear_status_if_disabled(changeset) do
+    if changeset.changes[:enabled] == false do
+      force_change(changeset, :up, nil)
+    else
+      changeset
+    end
   end
 end
