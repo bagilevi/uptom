@@ -55,7 +55,7 @@ defmodule Uptom.SiteController do
 
         conn
         |> put_flash(:info, "Site updated successfully.")
-        |> redirect(to: site_path(conn, :index))
+        |> redirect(to: site_path(conn, :show, site.id))
       {:error, changeset} ->
         render(conn, "edit.html", site: site, changeset: changeset)
     end
