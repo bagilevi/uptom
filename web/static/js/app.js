@@ -30,4 +30,8 @@ $(function() {
     $(this).removeClass('invalid')
     $(this).parent().find('.field-error').remove();
   });
+
+  setTimeout(function(){
+    $('.alert-container').fadeOut();
+  }, 3000)
 });
