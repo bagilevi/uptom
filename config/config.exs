@@ -5,11 +5,13 @@
 # is restricted to this project.
 use Mix.Config
 
+brand_name = "upTom"
 from_email = "uptom@jkl.me"
 
 # General application configuration
 config :uptom,
   ecto_repos: [Uptom.Repo],
+  brand_name: brand_name,
   email: from_email
 
 # Configures the endpoint
@@ -31,7 +33,7 @@ config :coherence,
   repo: Uptom.Repo,
   module: Uptom,
   logged_out_url: "/",
-  email_from_name: "upTom",
+  email_from_name: brand_name,
   email_from_email: from_email,
   opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :confirmable, :registerable]
 

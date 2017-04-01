@@ -1,0 +1,11 @@
+<div>
+  <p style="font-size: 2em;">
+    <a href="<%= @site_url %>"><%= @site_name %></a> is <strong><%= @status_text %></strong>.
+  </p>
+  <p>
+    <small>
+      Yours truly,
+      <a href="<%= @root_url %>">upTom</a>
+    </small>
+  </p>
+</div>
