@@ -1,7 +1,7 @@
 <div class="sites-container">
   <%= for site <- @sites do %>
     <div class="site-container">
-      <div class="card <%= site_card_style(site) %> grow clickable site-entity site-entity-<%= site.id %>" data-href="<%= site_path(@conn, :show, site) %>" data-site-id="<%= site.id %>">
+      <div class="card <%= site_card_style(site) %> grow clickable site-entity site-entity-<%= site.id %>" data-href="<%= site_path(@conn, :edit, site) %>" data-site-id="<%= site.id %>">
         <div class="card-content white-text">
           <span class="card-title"><%= site.name || site.url %></span>
           <p><%= site.url %></p>
