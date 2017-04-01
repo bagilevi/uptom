@@ -5,10 +5,12 @@
 # is restricted to this project.
 use Mix.Config
 
+from_email = "uptom@jkl.me"
+
 # General application configuration
 config :uptom,
   ecto_repos: [Uptom.Repo],
-  email: "uptom@jkl.me"
+  email: from_email
 
 # Configures the endpoint
 config :uptom, Uptom.Endpoint,
@@ -30,7 +32,7 @@ config :coherence,
   module: Uptom,
   logged_out_url: "/",
   email_from_name: "upTom",
-  email_from_email: Application.get_env(:uptom, :email),
+  email_from_email: from_email,
   opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :confirmable, :registerable]
 
 config :coherence, Uptom.Coherence.Mailer,
