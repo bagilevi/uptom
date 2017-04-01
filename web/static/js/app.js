@@ -21,6 +21,8 @@ import "phoenix_html"
 import socket from "./socket"
 
 $(function() {
+  $(".button-collapse").sideNav();
+
   $('.clickable').on('click', function(ev){
     window.location.href = $(this).data('href');
   });

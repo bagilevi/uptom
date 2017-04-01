@@ -1,5 +1,6 @@
 <%= centered_card "Sign up" do %>
   <%= render "form.html", changeset: @changeset,
                           label: "Register", required: [required: ""],
-                          action: registration_path(@conn, :create) %>
+                          action: registration_path(@conn, :create),
+                          conn: @conn %>
 <% end %>
