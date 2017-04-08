@@ -40,6 +40,8 @@ defmodule Uptom.Router do
 
     get "/", PageController, :index
 
+    get "/health", HealthController, :index
+
     get "/login", SessionController, :new
     post "/session", SessionController, :create
     get "/logout", SessionController, :delete
