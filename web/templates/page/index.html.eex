@@ -1,7 +1,7 @@
 <div class="section no-pad-bot" id="index-banner">
   <h1 id="welcome-text" class="header center grey-text text-darken-3">Free and easy monitoring for your website</h1>
   <div class="row center">
-    <h5 class="header col s12 light">Avoid embarrasment by being the first to know when your website is down!</h5>
+    <h5 class="header col s12 light">Avoid embarrasment! Be the first to know when your website is down!</h5>
   </div>
   <div class="row center">
     <a href="<%= registration_path(@conn, :new) %>"  class="btn-large waves-effect waves-light green darken-1">Get Started</a>
@@ -17,7 +17,7 @@
         <h2 class="center green-text"><i class="material-icons">flash_on</i></h2>
         <h5 class="center">Quick &amp; Easy Setup</h5>
 
-        <p class="light">Fill out a simple sign up form, add your site and prove you own the site by placing a file in the root directory, and you're ready to go!</p>
+        <p class="light">Fill out a simple sign up form, confirm your email address, and enter your website URL. upTom will email you when your website is down.</p>
       </div>
     </div>
 
@@ -26,7 +26,7 @@
         <h2 class="center green-text"><i class="material-icons">star</i></h2>
         <h5 class="center">Completely Free</h5>
 
-        <p class="light">No need to enter payment details. Premium features may be added in the future, but your website will always be monitored for free.</p>
+        <p class="light">No need to enter credit card details. Premium features may be added in the future, but your website will always be monitored for free.</p>
       </div>
     </div>
 
@@ -35,7 +35,7 @@
         <h2 class="center green-text"><i class="material-icons">sentiment_very_satisfied</i></h2>
         <h5 class="center">Peace of Mind</h5>
 
-        <p class="light">You don't have to check if your website is down every minute, upTom does that for you. In fact, he can check as often as every 5 seconds if you want him to.</p>
+        <p class="light">You don't have to check that your website is up all the time, upTom does that for you.</p>
       </div>
     </div>
   </div>
@@ -44,7 +44,6 @@
 <br><br>
 
 <div class="section">
-
   <div class="row center hide-on-med-and-up">
     <a href="<%= registration_path(@conn, :new) %>"  class="btn-large waves-effect waves-light green darken-1">Get Started</a>
   </div>
