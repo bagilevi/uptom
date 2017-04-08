@@ -8,11 +8,13 @@ defmodule Uptom.Checker do
   def check(site_id, url) do
     started_at = :calendar.universal_time()
 
-    result = Uptom.Pinger.ping(url)
+    {outcome, _} = result = Uptom.SmartPinger.ping(url)
 
-    push_update_to_clients(site_id, started_at, result)
-    insert_ping(site_id, started_at, result)
-    update_site_status(site_id, started_at, result)
+    unless outcome == :error do
+      push_update_to_clients(site_id, started_at, result)
+      insert_ping(site_id, started_at, result)
+      update_site_status(site_id, started_at, result)
+    end
 
     result
   end

@@ -1,6 +1,6 @@
 defmodule Uptom.Pinger do
-  def ping(url) do
-    response = HTTPotion.get(url, [timeout: 5_000])
+  def ping(url, opts \\ [timeout: 5_000]) do
+    response = HTTPotion.get(url, [timeout: opts[:timeout]])
     case response do
       %HTTPotion.Response{} ->
         if HTTPotion.Response.success?(response) do
