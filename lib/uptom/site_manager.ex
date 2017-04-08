@@ -53,10 +53,10 @@ defmodule Uptom.SiteManager do
     new_state =
       case result do
         {:up, _} ->
-          if state[:status] === :down, do: send_alert(state, :up)
+          if state[:status] === :down, do: send_alert(state, result)
           Keyword.put(state, :status, :up)
         {:down, _} ->
-          if state[:status] === :up, do: send_alert(state, :down)
+          if state[:status] === :up, do: send_alert(state, result)
           Keyword.put(state, :status, :down)
         _ -> state
       end
@@ -85,10 +85,10 @@ defmodule Uptom.SiteManager do
     GenServer.cast(site_manager_pid, {:result, result})
   end
 
-  def send_alert(state, status) do
+  def send_alert(state, result) do
     Uptom.Alerter.alert(
       state[:site],
-      status
+      result
     )
   end
 end

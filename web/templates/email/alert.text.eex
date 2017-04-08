@@ -1,0 +1,11 @@
+<%= @site_name %> is <%= @status_text %>
+
+<%= @site_url %>
+<%= if @details_text do %>
+
+<%= @details_text %>.
+<% end %>
+
+---
+Sent by upTom, your website monitoring tool.
+<%= @root_url %>

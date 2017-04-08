@@ -2,10 +2,14 @@
   <p style="font-size: 2em;">
     <a href="<%= @site_url %>"><%= @site_name %></a> is <strong><%= @status_text %></strong>.
   </p>
+  <%= if @details_text do %>
+    <p>
+      <strong><%= @details_text %></strong>.
+    </p>
+  <% end %>
   <p>
     <small>
-      Yours truly,
-      <a href="<%= @root_url %>">upTom</a>
+      Sent by <a href="<%= @root_url %>">upTom</a>, your website monitoring tool.
     </small>
   </p>
 </div>
