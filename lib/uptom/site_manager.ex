@@ -4,6 +4,7 @@ defmodule Uptom.SiteManager do
   """
 
   use GenServer
+  require Logger
 
   def start_link(site_id) do
     {:ok, pid} = GenServer.start_link(
@@ -22,11 +23,13 @@ defmodule Uptom.SiteManager do
   end
 
   def init(state) do
+    state = state |> Keyword.put(:last_at, state[:site].last_checked_at)
     state = schedule_next_run(state)
     {:ok, state}
   end
 
   def handle_info(:work, state) do
+    state = state |> Keyword.put(:last_at, now_as_unix_time)
     state = schedule_next_run(state)
     site_manager_pid = self()
 
@@ -77,8 +80,20 @@ defmodule Uptom.SiteManager do
 
   defp schedule_next_run(state) do
     if state[:timer], do: Process.cancel_timer(state[:timer])
-    timer = Process.send_after(self(), :work, state[:site].frequency * 1000)
-    Keyword.put(state, :timer, timer)
+
+    now = now_as_unix_time
+    next_check_time =
+      if state[:last_at] do
+        state[:last_at] + state[:site].frequency
+      else
+        now
+      end
+    seconds_until_next = max(next_check_time - now, 0)
+
+    IO.puts "Next check for #{state[:site].name} is in #{seconds_until_next} seconds"
+
+    timer = Process.send_after(self(), :work, seconds_until_next * 1000)
+    state |> Keyword.put(:timer, timer)
   end
 
   def update_result(result, site_manager_pid) do
@@ -91,4 +106,6 @@ defmodule Uptom.SiteManager do
       result
     )
   end
+
+  defp now_as_unix_time, do: DateTime.utc_now |> DateTime.to_unix
 end
