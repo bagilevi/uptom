@@ -42,6 +42,10 @@ config :coherence, Uptom.Coherence.Mailer,
   api_key: "your api key here"
 # %% End Coherence Configuration %%
 
+config :rollbax,
+  access_token: {:system, "ROLLBAR_ACCESS_TOKEN"},
+  environment: "production"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

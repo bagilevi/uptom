@@ -1,6 +1,7 @@
 defmodule Uptom.Router do
   use Uptom.Web, :router
   use Coherence.Router
+  use Plug.ErrorHandler
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -63,4 +64,24 @@ defmodule Uptom.Router do
   # scope "/api", Uptom do
   #   pipe_through :api
   # end
+
+  defp handle_errors(conn, %{kind: kind, reason: reason, stack: stacktrace}) do
+    conn =
+      conn
+      |> Plug.Conn.fetch_cookies()
+      |> Plug.Conn.fetch_query_params()
+
+    conn_data = %{
+      "request" => %{
+        "cookies" => conn.req_cookies,
+        "url" => "#{conn.scheme}://#{conn.host}:#{conn.port}#{conn.request_path}",
+        "user_ip" => (conn.remote_ip |> Tuple.to_list() |> Enum.join(".")),
+        "headers" => Enum.into(conn.req_headers, %{}),
+        "params" => conn.params,
+        "method" => conn.method,
+      }
+    }
+
+    Rollbax.report(kind, reason, stacktrace, %{}, conn_data)
+  end
 end

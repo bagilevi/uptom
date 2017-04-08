@@ -2,6 +2,7 @@ defmodule Uptom.HealthController do
   use Uptom.Web, :controller
 
   def index(conn, _params) do
+    raise "funky"
     sites = Repo.all from s in Uptom.Site,
       where: s.enabled == true,
       where: fragment("((NOW() AT TIME ZONE 'utc') - interval '1 second' * frequency - INTERVAL '30 seconds') > last_checked_at")

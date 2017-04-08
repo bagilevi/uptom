@@ -19,7 +19,8 @@ defmodule Uptom.Mixfile do
   def application do
     [mod: {Uptom, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :httpotion, :coherence, :swoosh, :comeonin, :gen_smtp]]
+                    :phoenix_ecto, :postgrex, :httpotion, :coherence, :swoosh, :comeonin, :gen_smtp,
+                    :rollbax]]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,7 +44,8 @@ defmodule Uptom.Mixfile do
       {:coherence, "~> 0.3"},
       {:comeonin, "~> 2.4"},
       {:distillery, "~> 1.0"},
-      {:gen_smtp, "~> 0.11.0"}
+      {:gen_smtp, "~> 0.11.0"},
+      {:rollbax, "~> 0.6"}
     ]
   end
 
