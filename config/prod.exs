@@ -13,8 +13,8 @@ use Mix.Config
 # which you typically run after static files are built.
 config :uptom, Uptom.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "uptom.jkl.me", port: 80],
-  root_url: "http://uptom.jkl.me/",
+  url: [host: "uptom.levs.tools", port: 80],
+  root_url: "http://uptom.levs.tools/",
   cache_static_manifest: "priv/static/manifest.json",
   server: true,
   version: Mix.Project.config[:version],
